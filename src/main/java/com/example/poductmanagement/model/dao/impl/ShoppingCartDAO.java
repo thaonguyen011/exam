@@ -54,6 +54,7 @@ public class ShoppingCartDAO implements IShoppingCartDAO {
         return isSave;
     }
 
+
     @Override
     public ShoppingCart select(int id) {
         ShoppingCart cart = null;
@@ -85,14 +86,13 @@ public class ShoppingCartDAO implements IShoppingCartDAO {
         return isDelete;
     }
 
-    @Override
-    public boolean update(ShoppingCart shoppingCart) {
+
+    public boolean update2(int productId, int quantity) {
         boolean isEdit = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CART);
-            preparedStatement.setInt(1, shoppingCart.getQuantity());
-            preparedStatement.setInt(2, shoppingCart.getProductID());
-            preparedStatement.setInt(3, shoppingCart.getId());
+            preparedStatement.setInt(1,quantity);
+            preparedStatement.setInt(2, productId);
             isEdit = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,5 +129,10 @@ public class ShoppingCartDAO implements IShoppingCartDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean update(ShoppingCart shoppingCart) {
+        return false;
     }
 }

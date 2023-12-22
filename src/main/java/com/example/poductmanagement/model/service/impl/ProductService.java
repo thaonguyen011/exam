@@ -31,6 +31,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public boolean update() {
+        return false;
+    }
+
+
     public boolean update(Product product) {
         return productDAO.update(product);
     }

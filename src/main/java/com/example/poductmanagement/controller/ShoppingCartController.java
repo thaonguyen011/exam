@@ -81,7 +81,7 @@ public class ShoppingCartController extends HttpServlet {
         int quantity = Integer.parseInt(req.getParameter("newQuantity"));
         HttpSession session = req.getSession();
         int productId = (int) session.getAttribute("productId");
-        shoppingCartService.insertUpdateProduct(productId, quantity);
+        shoppingCartService.update2(productId, quantity);
         list(req, resp);
     }
 

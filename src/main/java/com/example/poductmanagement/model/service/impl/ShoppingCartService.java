@@ -27,9 +27,9 @@
             return shoppingCartDAO.insert(object);
         }
 
-        @Override
-        public boolean update(ShoppingCart object) {
-            return shoppingCartDAO.update(object);
+
+        public boolean update2(int productId, int quantity) {
+            return shoppingCartDAO.update2(productId, quantity);
         }
 
         @Override
@@ -43,5 +43,10 @@
 
         public void insertUpdateProduct(int productId, int quantity) {
             shoppingCartDAO.insertUpdateProduct(productId, quantity);
+        }
+
+        @Override
+        public boolean update() {
+            return false;
         }
     }
