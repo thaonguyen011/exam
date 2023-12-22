@@ -1,37 +1,33 @@
 package com.example.poductmanagement.model.dao.impl;
 
 import com.example.poductmanagement.model.dao.IShoppingCartDAO;
-import com.example.poductmanagement.model.entity.Product;
 import com.example.poductmanagement.model.entity.ShoppingCart;
 import com.example.poductmanagement.model.utils.MyConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCartDAO implements IShoppingCartDAO {
     Connection connection = MyConnection.getConnection();
+    private final String SELECT_ALL_CART_V2 = "select * from shopping_cart";
 
     private final String SELECT_ALL_CART = "select sum(quantity) as soluong, product_id from shopping_cart group by product_id;";
     private final String SELECT_CART = "SELECT * FROM shopping_cart where id = ?;";
     private final String INSERT_CART = "INSERT INTO shopping_cart(quantity, product_id) values (?,?)";
-    private final String UPDATE_CART = "update shopping_cart set quantity = ?, product_id = ? where id = ?";
+    private final String UPDATE_CART = "update shopping_cart set quantity = ? where product_id = ?";
     private final String DELETE_CART = "delete from shopping_cart where product_id = ?";
-
     private final String SELECT_CART_BY_PRODUCT_ID = "select sum(quantity) as soluong, product_id from shopping_cart where product_id = ? group by product_id;";
 
     @Override
     public List<ShoppingCart> selectAll() {
         List<ShoppingCart> shoppingCarts = new ArrayList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement(SELECT_ALL_CART);
+            PreparedStatement ps = connection.prepareStatement(SELECT_ALL_CART_V2);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int productId = rs.getInt("product_id");
-                int quantity = rs.getInt("soluong");
+                int quantity = rs.getInt("quantity");
                 ShoppingCart shoppingCart = new ShoppingCart( productId,quantity);
                 shoppingCarts.add(shoppingCart);
             }
@@ -120,5 +116,18 @@ public class ShoppingCartDAO implements IShoppingCartDAO {
         System.out.println("Connected to database successful");
         return shoppingCart;
 
+    }
+
+    public void insertUpdateProduct(int productId, int quantity) {
+        String query = "{call insertProduct(?, ?)}";
+
+        try {
+            CallableStatement cs = connection.prepareCall(query);
+            cs.setInt(1, productId);
+            cs.setInt(2, quantity);
+             cs.execute() ;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

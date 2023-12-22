@@ -24,5 +24,7 @@
         </tr>
     </c:forEach>
 </table>
+
+<p style="display: block;width: 500px;height: 500px">Chuyện người con gái Nam Xương là thiên truyện thứ 16 trong tổng số 20 truyện của Truyền kỳ mạn lục (So với 11 trong 20 truyện về phụ nữ). Truyền kỳ mạn lục (ghi chép tản mạn những chuyện kỳ lạ được lưu truyền) là <span style="display: inline-block"> tác phẩm được viết b</span>ằng chữ Hán.</p>
 </body>
 </html>

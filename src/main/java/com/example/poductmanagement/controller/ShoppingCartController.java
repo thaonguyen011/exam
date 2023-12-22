@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +46,11 @@ public class ShoppingCartController extends HttpServlet {
     }
 
     private void showEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        int productId = Integer.parseInt(req.getParameter("productId"));
-        req.setAttribute("quantity", productId);
+        int productId = Integer.parseInt(req.getParameter("id"));
+        int quantity = Integer.parseInt(req.getParameter("quantity"));
+        HttpSession session = req.getSession();
+        session.setAttribute("productId", productId);
+        req.setAttribute("quantity", quantity);
         RequestDispatcher dispatcher = req.getRequestDispatcher("edit.jsp");
         dispatcher.forward(req, resp);
     }
@@ -74,11 +78,11 @@ public class ShoppingCartController extends HttpServlet {
     }
 
     private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        int quantity = Integer.parseInt(req.getParameter("quantity"));
-        int id = Integer.parseInt(req.getParameter("id"));
-        ShoppingCart shoppingCart = new ShoppingCart(id, quantity);
-        shoppingCartService.update(shoppingCart);
-        doGet(req, resp);
+        int quantity = Integer.parseInt(req.getParameter("newQuantity"));
+        HttpSession session = req.getSession();
+        int productId = (int) session.getAttribute("productId");
+        shoppingCartService.insertUpdateProduct(productId, quantity);
+        list(req, resp);
     }
 
     private void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

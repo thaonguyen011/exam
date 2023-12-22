@@ -25,7 +25,7 @@
             <td>${cart.getProduct().getPrice()}</td>
             <td>${cart.getQuantity()}</td>
             <td>${cart.getQuantity() * cart.getProduct().getPrice()}</td>
-<%--            <td><a href="${pageContext.request.contextPath}/shoppingCart?action=edit&id=${product.getId()}">Thêm vào giỏ hàng</a></td>--%>
+            <td><a href="${pageContext.request.contextPath}/shoppingCart?action=edit&id=${cart.getProduct().getId()}&quantity=${cart.getQuantity()}">Sửa</a></td>
             <td><a href="${pageContext.request.contextPath}/shoppingCart?action=remove&id=${cart.getProduct().getId()}">Xoá</a></td>
         </tr>
     </c:forEach>

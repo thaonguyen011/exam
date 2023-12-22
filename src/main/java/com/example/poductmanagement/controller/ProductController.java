@@ -20,7 +20,7 @@ import java.util.List;
 @WebServlet("/products")
 public class ProductController extends HttpServlet {
     private IProductService productService;
-    private IShoppingCartService shoppingCartService;
+    private ShoppingCartService shoppingCartService;
     @Override
     public void init() {
         productService = new ProductService();
@@ -35,8 +35,9 @@ public class ProductController extends HttpServlet {
         }
         if (action.equals("add")) {
             int id = Integer.parseInt(req.getParameter("id"));
-            ShoppingCart shoppingCart = new ShoppingCart(id, 1);
-            shoppingCartService.insert(shoppingCart);
+            System.out.println("id " +id);
+            shoppingCartService.insertUpdateProduct(id, 1);
+//            shoppingCartService.insertUpdateProduct(1, 1);
             resp.sendRedirect("/shoppingCart?action=list");
         } else {
             List<Product> productList = productService.selectAll();

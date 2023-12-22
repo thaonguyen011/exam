@@ -1,6 +1,5 @@
     package com.example.poductmanagement.model.service.impl;
 
-    import com.example.poductmanagement.model.dao.IShoppingCartDAO;
     import com.example.poductmanagement.model.dao.impl.ShoppingCartDAO;
     import com.example.poductmanagement.model.entity.ShoppingCart;
     import com.example.poductmanagement.model.service.IShoppingCartService;
@@ -40,5 +39,9 @@
 
         public ShoppingCart selectByProductId(int productId) {
             return shoppingCartDAO.selectByProduct(productId);
+        }
+
+        public void insertUpdateProduct(int productId, int quantity) {
+            shoppingCartDAO.insertUpdateProduct(productId, quantity);
         }
     }
